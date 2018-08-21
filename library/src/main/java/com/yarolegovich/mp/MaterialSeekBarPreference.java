@@ -2,20 +2,21 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
 import com.yarolegovich.mp.util.Utils;
 
-import java.util.Arrays;
-
-import static com.yarolegovich.mp.R.styleable.*;
+import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference;
+import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference_mp_max_val;
+import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference_mp_min_val;
+import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference_mp_show_val;
 
 /**
  * Created by yarolegovich on 15.05.2016.
@@ -28,6 +29,14 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
     private int minValue;
     private int maxValue;
     private boolean showValue;
+
+    public MaterialSeekBarPreference(Context context, int defaultValue, String key, UserInputModule userInputModule, StorageModule storageModule, int minValue, int maxValue, boolean showValue) {
+        super(context, Integer.toString(defaultValue), key, userInputModule, storageModule);
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.showValue = showValue;
+        init(null);
+    }
 
     public MaterialSeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,7 +60,7 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
     }
 
     @Override
-    protected void onCollectAttributes(AttributeSet attrs) {
+    protected void onCollectAttributes(@NonNull AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, MaterialSeekBarPreference);
         try {
             maxValue = ta.getInt(MaterialSeekBarPreference_mp_max_val, 10);
@@ -64,12 +73,12 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
 
     @Override
     protected void onViewCreated() {
-        value = (TextView) findViewById(R.id.mp_value);
+        value = findViewById(R.id.mp_value);
         if (showValue) {
             value.setVisibility(VISIBLE);
         }
 
-        seekBar = (AppCompatSeekBar) findViewById(R.id.mp_seekbar);
+        seekBar = findViewById(R.id.mp_seekbar);
         seekBar.setOnSeekBarChangeListener(new ProgressSaver());
         seekBar.setMax(maxValue - minValue);
         setSeekBarValue(getValue());
@@ -86,6 +95,7 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
 
     @Override
     public void setValue(Integer value) {
+        super.setValue(value);
         storageModule.saveInt(key, value);
         setSeekBarValue(value);
     }
@@ -103,6 +113,37 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
     @Override
     protected int getLayout() {
         return R.layout.view_seekbar_preference;
+    }
+
+    public static class Builder extends AbsMaterialPreference.Builder<MaterialSeekBarPreference, Integer> {
+        private int minValue;
+        private int maxValue;
+        private boolean showValue;
+
+        public Builder(Context context) {
+            super(context);
+        }
+
+        public Builder minValue(int minValue) {
+            this.minValue = minValue;
+            return this;
+        }
+
+        public Builder maxValue(int maxValue) {
+            this.maxValue = maxValue;
+            return this;
+        }
+
+        public Builder showValue(boolean showValue) {
+            this.showValue = showValue;
+            return this;
+        }
+
+        @NonNull
+        @Override
+        public MaterialSeekBarPreference build() {
+            return new MaterialSeekBarPreference(context, defaultValue, key, userInputModule, storageModule, minValue, maxValue, showValue);
+        }
     }
 
     private class ProgressSaver implements SeekBar.OnSeekBarChangeListener {

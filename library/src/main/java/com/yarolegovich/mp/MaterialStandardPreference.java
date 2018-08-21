@@ -3,8 +3,6 @@ package com.yarolegovich.mp;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.yarolegovich.mp.io.StorageModule;
-
 /**
  * Created by yarolegovich on 15.05.2016.
  */
@@ -29,9 +27,8 @@ public class MaterialStandardPreference extends AbsMaterialPreference<Void> {
 
     @Override
     public void setValue(Void value) {
-
+        super.setValue(value);
     }
-
 
     @Override
     protected int getLayout() {

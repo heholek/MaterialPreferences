@@ -2,9 +2,6 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-
-import com.yarolegovich.mp.io.StorageModule;
 
 /**
  * Created by yarolegovich on 10.05.2016.
@@ -29,11 +26,12 @@ public class MaterialRightIconPreference extends AbsMaterialPreference<Void> {
     }
 
     @Override
-    public void setValue(Void value) { }
+    public void setValue(Void value) {
+        super.setValue(value);
+    }
 
     @Override
     protected int getLayout() {
         return R.layout.view_right_icon_preference;
     }
-
 }

@@ -2,7 +2,11 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
+import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
 
 import static com.yarolegovich.mp.R.styleable.*;
 
@@ -10,9 +14,14 @@ import static com.yarolegovich.mp.R.styleable.*;
  * Created by yarolegovich on 06.05.2016.
  */
 abstract class AbsMaterialListPreference<T> extends AbsMaterialTextValuePreference<T> {
-
     protected CharSequence[] entries;
     protected CharSequence[] entryValues;
+
+    public AbsMaterialListPreference(Context context, String defaultValue, String key, UserInputModule userInputModule, StorageModule storageModule, @ShowValueMode int showValueMode, CharSequence[] entries, CharSequence[] entryValues) {
+        super(context, defaultValue, key, userInputModule, storageModule, showValueMode);
+        this.entries = entries;
+        this.entryValues = entryValues;
+    }
 
     public AbsMaterialListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,7 +36,7 @@ abstract class AbsMaterialListPreference<T> extends AbsMaterialTextValuePreferen
     }
 
     @Override
-    protected void onCollectAttributes(AttributeSet attrs) {
+    protected void onCollectAttributes(@NonNull AttributeSet attrs) {
         super.onCollectAttributes(attrs);
 
         TypedArray ta = getContext().obtainStyledAttributes(attrs, AbsMaterialListPreference);
@@ -53,5 +62,4 @@ abstract class AbsMaterialListPreference<T> extends AbsMaterialTextValuePreferen
             }
         }
     }
-
 }

@@ -31,6 +31,7 @@ public class MaterialChoicePreference extends AbsMaterialListPreference<String> 
 
     @Override
     public void setValue(String value) {
+        super.setValue(value);
         storageModule.saveString(key, value);
         showNewValueIfNeeded(toRepresentation(value));
     }

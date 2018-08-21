@@ -2,29 +2,36 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
-import com.yarolegovich.mp.io.MaterialPreferences;
 
-import static com.yarolegovich.mp.R.styleable.*;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference;
+import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference_mp_show_value;
 
 /**
  * Created by yarolegovich on 05.05.2016.
  */
 @SuppressWarnings("ResourceType")
-abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPreference<T> implements
-        UserInputModule.Listener<T>, android.view.View.OnClickListener {
-
-    private static final int NOT_SHOW_VALUE = 0;
-    private static final int SHOW_ON_RIGHT = 1;
-    private static final int SHOW_ON_BOTTOM = 2;
-
+public abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPreference<T> implements UserInputModule.Listener<T>, android.view.View.OnClickListener {
+    public static final int NOT_SHOW_VALUE = 0;
+    public static final int SHOW_ON_RIGHT = 1;
+    public static final int SHOW_ON_BOTTOM = 2;
     private TextView rightValue;
     private int showValueMode;
+
+    public AbsMaterialTextValuePreference(Context context, String defaultValue, String key, UserInputModule userInputModule, StorageModule storageModule, @ShowValueMode int showValueMode) {
+        super(context, defaultValue, key, userInputModule, storageModule);
+        this.showValueMode = showValueMode;
+    }
 
     public AbsMaterialTextValuePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,7 +46,7 @@ abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPreference<T
     }
 
     @Override
-    protected void onCollectAttributes(AttributeSet attrs) {
+    protected void onCollectAttributes(@NonNull AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, AbsMaterialTextValuePreference);
         try {
             showValueMode = ta.getInt(AbsMaterialTextValuePreference_mp_show_value, NOT_SHOW_VALUE);
@@ -50,7 +57,7 @@ abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPreference<T
 
     @Override
     protected void onViewCreated() {
-        rightValue = (TextView) findViewById(R.id.mp_right_value);
+        rightValue = findViewById(R.id.mp_right_value);
         showNewValueIfNeeded(toRepresentation(getValue()));
         addPreferenceClickListener(this);
     }
@@ -91,5 +98,23 @@ abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPreference<T
     @Override
     protected int getLayout() {
         return R.layout.view_text_input_preference;
+    }
+
+    @IntDef({NOT_SHOW_VALUE, SHOW_ON_RIGHT, SHOW_ON_BOTTOM})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ShowValueMode {
+    }
+
+    public abstract static class Builder<V extends AbsMaterialTextValuePreference<T>, T> extends AbsMaterialPreference.Builder<V, T> {
+        protected int showValueMode;
+
+        public Builder(Context context) {
+            super(context);
+        }
+
+        public Builder<V, T> showValueMode(@ShowValueMode int showValueMode) {
+            this.showValueMode = showValueMode;
+            return this;
+        }
     }
 }

@@ -1,9 +1,6 @@
 package com.yarolegovich.mp.io;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 /**
  * Created by yarolegovich on 05.05.2016.
@@ -11,6 +8,13 @@ import android.support.annotation.Nullable;
 public class MaterialPreferences {
 
     private static final MaterialPreferences instance = new MaterialPreferences();
+    private UserInputModule.Factory userInputModuleFactory;
+    private StorageModule.Factory storageModuleFactory;
+
+    private MaterialPreferences() {
+        userInputModuleFactory = new StandardUserInputFactory();
+        storageModuleFactory = new SharedPrefsStorageFactory(null);
+    }
 
     public static MaterialPreferences instance() {
         return instance;
@@ -22,14 +26,6 @@ public class MaterialPreferences {
 
     public static StorageModule getStorageModule(Context context) {
         return instance.storageModuleFactory.create(context);
-    }
-
-    private UserInputModule.Factory userInputModuleFactory;
-    private StorageModule.Factory storageModuleFactory;
-
-    private MaterialPreferences() {
-        userInputModuleFactory = new StandardUserInputFactory();
-        storageModuleFactory = new SharedPrefsStorageFactory(null);
     }
 
     public MaterialPreferences setUserInputModule(UserInputModule.Factory factory) {

@@ -1,3 +1,5 @@
+## This is a fork of the original MaterialPreferences, I needed some features added, so I forked it. This isn't really "usable" in your own project (you'd be better forking further) nor mergeable.
+
 # MaterialPreferences 
 
 This library is a set of VIEWS (not Preferences) and is aimed to solve this problems:

@@ -6,12 +6,11 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.yarolegovich.mp.io.UserInputModule;
 import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +24,17 @@ public class MaterialPreferenceScreen extends ScrollView {
 
     private UserInputModule userInputModule;
     private StorageModule storageModule;
+
+    {
+        setFillViewport(true);
+        LinearLayout container = new LinearLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        container.setOrientation(LinearLayout.VERTICAL);
+        addView(container);
+        this.container = container;
+    }
 
     public MaterialPreferenceScreen(Context context) {
         super(context);
@@ -43,17 +53,6 @@ public class MaterialPreferenceScreen extends ScrollView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    {
-        setFillViewport(true);
-        LinearLayout container = new LinearLayout(getContext());
-        container.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        container.setOrientation(LinearLayout.VERTICAL);
-        addView(container);
-        this.container = container;
-    }
-
     public void changeViewsVisibility(List<Integer> viewIds, boolean visible) {
         int visibility = visible ? VISIBLE : GONE;
         changeViewsVisibility(container, viewIds, visibility);
@@ -68,15 +67,34 @@ public class MaterialPreferenceScreen extends ScrollView {
 
     public void setVisibilityController(
             final AbsMaterialCheckablePreference controller,
+            final AbsMaterialPreference[] controlled,
+            final boolean showWhenChecked) {
+        boolean shouldShow = showWhenChecked ? controller.getValue() : !controller.getValue();
+        int initialVisibility = shouldShow ? View.VISIBLE : View.GONE;
+        for (AbsMaterialPreference c : controlled)
+            c.setVisibility(initialVisibility);
+        controller.addPreferenceValueListener(new AbsMaterialPreference.PreferenceValueChangedListener<Boolean>() {
+            @Override
+            public void onValueChanged(Boolean value) {
+                boolean shouldShow = showWhenChecked ? value : !value;
+                int visibility = shouldShow ? View.VISIBLE : View.GONE;
+                for (AbsMaterialPreference c : controlled)
+                    c.setVisibility(visibility);
+            }
+        });
+    }
+
+    public void setVisibilityController(
+            final AbsMaterialCheckablePreference controller,
             final List<Integer> controlledIds,
             final boolean showWhenChecked) {
         boolean shouldShow = showWhenChecked ? controller.getValue() : !controller.getValue();
         int initialVisibility = shouldShow ? View.VISIBLE : View.GONE;
         changeViewsVisibility(this, controlledIds, initialVisibility);
-        controller.addPreferenceClickListener(new OnClickListener() {
+        controller.addPreferenceValueListener(new AbsMaterialPreference.PreferenceValueChangedListener<Boolean>() {
             @Override
-            public void onClick(View v) {
-                boolean shouldShow = showWhenChecked ? controller.getValue() : !controller.getValue();
+            public void onValueChanged(Boolean value) {
+                boolean shouldShow = showWhenChecked ? value : !value;
                 int visibility = shouldShow ? View.VISIBLE : View.GONE;
                 changeViewsVisibility(MaterialPreferenceScreen.this,
                         controlledIds,
@@ -105,13 +123,13 @@ public class MaterialPreferenceScreen extends ScrollView {
         return userInputModule;
     }
 
-    StorageModule getStorageModule() {
-        return storageModule;
-    }
-
     public void setUserInputModule(UserInputModule userInputModule) {
         this.userInputModule = userInputModule;
         setUserInputModuleRecursively(container, userInputModule);
+    }
+
+    StorageModule getStorageModule() {
+        return storageModule;
     }
 
     public void setStorageModule(StorageModule storageModule) {

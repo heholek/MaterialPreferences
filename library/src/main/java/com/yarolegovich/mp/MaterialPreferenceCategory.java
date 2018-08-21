@@ -1,9 +1,7 @@
 package com.yarolegovich.mp;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import static com.yarolegovich.mp.util.Utils.*;
+import static com.yarolegovich.mp.util.Utils.dpToPixels;
 
 /**
  * Created by yarolegovich on 01.05.2016.
@@ -66,8 +64,8 @@ public class MaterialPreferenceCategory extends CardView {
 
         setRadius(0);
 
-        container = (ViewGroup) findViewById(R.id.mpc_container);
-        title = (TextView) findViewById(R.id.mpc_title);
+        container = findViewById(R.id.mpc_container);
+        title = findViewById(R.id.mpc_title);
 
         if (!TextUtils.isEmpty(titleText)) {
             title.setVisibility(View.VISIBLE);

@@ -5,18 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.pavelsikun.vintagechroma.ChromaDialog;
 import com.pavelsikun.vintagechroma.IndicatorMode;
 import com.pavelsikun.vintagechroma.OnColorSelectedListener;
 import com.pavelsikun.vintagechroma.colormode.ColorMode;
 import com.yarolegovich.mp.R;
-import com.yarolegovich.mp.util.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +22,6 @@ import java.util.Set;
  * Created by yarolegovich on 06.05.2016.
  */
 public class StandardUserInputModule implements UserInputModule {
-
     protected Context context;
 
     public StandardUserInputModule(Context context) {
@@ -39,7 +35,7 @@ public class StandardUserInputModule implements UserInputModule {
             CharSequence defaultValue,
             final Listener<String> listener) {
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_edittext, null);
-        final EditText inputField = (EditText) view.findViewById(R.id.mp_text_input);
+        final EditText inputField = view.findViewById(R.id.mp_text_input);
 
         if (defaultValue != null) {
             inputField.setText(defaultValue);

@@ -6,14 +6,19 @@ import android.view.View;
 import android.widget.Checkable;
 
 import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
 
 /**
  * Created by yarolegovich on 04.05.2016.
  */
-abstract class AbsMaterialCheckablePreference extends AbsMaterialPreference<Boolean> implements
+public abstract class AbsMaterialCheckablePreference extends AbsMaterialPreference<Boolean> implements
         View.OnClickListener {
 
     protected Checkable checkableWidget;
+
+    public AbsMaterialCheckablePreference(Context context, boolean defaultValue, String key, UserInputModule userInputModule, StorageModule storageModule) {
+        super(context, Boolean.toString(defaultValue), key, userInputModule, storageModule);
+    }
 
     public AbsMaterialCheckablePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,7 +34,7 @@ abstract class AbsMaterialCheckablePreference extends AbsMaterialPreference<Bool
 
     @Override
     protected void onViewCreated() {
-        checkableWidget = (Checkable) findViewById(R.id.mp_checkable);
+        checkableWidget = findViewById(R.id.mp_checkable);
         boolean isChecked = getValue();
         checkableWidget.setChecked(isChecked);
         addPreferenceClickListener(this);
@@ -55,7 +60,7 @@ abstract class AbsMaterialCheckablePreference extends AbsMaterialPreference<Bool
 
     @Override
     public void setValue(Boolean value) {
+        super.setValue(value);
         storageModule.saveBoolean(key, value);
     }
-
 }

@@ -9,7 +9,6 @@ import java.util.List;
  * Created by yarolegovich on 04.05.2016.
  */
 public class CompositeClickListener implements View.OnClickListener {
-
     private List<View.OnClickListener> listeners;
 
     public CompositeClickListener() {

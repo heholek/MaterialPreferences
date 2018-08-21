@@ -3,15 +3,20 @@ package com.yarolegovich.mp;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
-import com.yarolegovich.mp.io.MaterialPreferences;
 import com.yarolegovich.mp.view.ColorView;
 
-import static com.yarolegovich.mp.R.styleable.*;
+import static com.yarolegovich.mp.R.styleable.MaterialColorPreference;
+import static com.yarolegovich.mp.R.styleable.MaterialColorPreference_mp_border_color;
+import static com.yarolegovich.mp.R.styleable.MaterialColorPreference_mp_border_width;
+import static com.yarolegovich.mp.R.styleable.MaterialColorPreference_mp_indicator_shape;
+import static com.yarolegovich.mp.R.styleable.MaterialColorPreference_mp_initial_color;
 import static com.yarolegovich.mp.view.ColorView.SHAPE_CIRCLE;
 
 /**
@@ -38,7 +43,7 @@ public class MaterialColorPreference extends AbsMaterialPreference<Integer> impl
     }
 
     @Override
-    protected void onCollectAttributes(AttributeSet attrs) {
+    protected void onCollectAttributes(@NonNull AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, MaterialColorPreference);
         try {
             config = new ColorIndicatorConfig();
@@ -54,7 +59,7 @@ public class MaterialColorPreference extends AbsMaterialPreference<Integer> impl
 
     @Override
     protected void onViewCreated() {
-        colorView = (ColorView) findViewById(R.id.mp_color);
+        colorView = findViewById(R.id.mp_color);
         colorView.setBorderColor(config.getBorderColor());
         colorView.setShape(config.getShape());
         colorView.setBorderWidth(config.getBorderWidth());
@@ -64,12 +69,14 @@ public class MaterialColorPreference extends AbsMaterialPreference<Integer> impl
     }
 
     @Override
+    @ColorInt
     public Integer getValue() {
         return storageModule.getInt(key, initialColor);
     }
 
     @Override
-    public void setValue(Integer value) {
+    public void setValue(@ColorInt Integer value) {
+        super.setValue(value);
         storageModule.saveInt(key, value);
         colorView.setColor(value);
     }

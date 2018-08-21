@@ -1,9 +1,7 @@
 package com.yarolegovich.mp.io;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import java.util.Set;
 
@@ -11,7 +9,6 @@ import java.util.Set;
  * Created by yarolegovich on 15.05.2016.
  */
 public class SharedPreferenceStorageModule implements StorageModule {
-
     private SharedPreferences prefs;
 
     public SharedPreferenceStorageModule(SharedPreferences prefs) {
@@ -25,7 +22,7 @@ public class SharedPreferenceStorageModule implements StorageModule {
 
     @Override
     public void saveString(String key, String value) {
-        prefs.edit().putString(key, value).apply();;
+        prefs.edit().putString(key, value).apply();
     }
 
     @Override
