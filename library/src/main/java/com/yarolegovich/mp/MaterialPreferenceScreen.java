@@ -60,7 +60,7 @@ public class MaterialPreferenceScreen extends ScrollView {
 
     public void setVisibilityController(int controllerId, List<Integer> controlledIds, boolean showWhenChecked) {
         setVisibilityController(
-                findViewById(controllerId),
+                (AbsMaterialCheckablePreference) findViewById(controllerId),
                 controlledIds, showWhenChecked
         );
     }
