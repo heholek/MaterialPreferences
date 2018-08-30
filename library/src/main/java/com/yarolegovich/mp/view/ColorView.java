@@ -121,6 +121,7 @@ public class ColorView extends View {
 
     private interface Shape {
         void drawSelf(Canvas canvas);
+
         void measureSelf();
     }
 

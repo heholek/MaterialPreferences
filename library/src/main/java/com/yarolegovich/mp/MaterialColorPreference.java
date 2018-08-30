@@ -107,28 +107,28 @@ public class MaterialColorPreference extends AbsMaterialPreference<Integer> impl
         private int borderWidth;
         private int shape;
 
-        public void setBorderColor(int borderColor) {
-            this.borderColor = borderColor;
-        }
-
-        public void setBorderWidth(int borderWidth) {
-            this.borderWidth = borderWidth;
-        }
-
-        public void setShape(int shape) {
-            this.shape = shape;
-        }
-
         public int getBorderColor() {
             return borderColor;
+        }
+
+        public void setBorderColor(int borderColor) {
+            this.borderColor = borderColor;
         }
 
         public int getBorderWidth() {
             return borderWidth;
         }
 
+        public void setBorderWidth(int borderWidth) {
+            this.borderWidth = borderWidth;
+        }
+
         public int getShape() {
             return shape;
+        }
+
+        public void setShape(int shape) {
+            this.shape = shape;
         }
     }
 }

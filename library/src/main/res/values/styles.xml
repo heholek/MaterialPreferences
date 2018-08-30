@@ -9,7 +9,7 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="PreferenceHeader" parent="PreferenceHeaderBase"/>
+    <style name="PreferenceHeader" parent="PreferenceHeaderBase" />
 
     <style name="PreferenceTitle">
         <item name="android:textColor">?android:textColorPrimary</item>

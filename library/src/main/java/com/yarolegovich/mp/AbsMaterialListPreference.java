@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
 
-import static com.yarolegovich.mp.R.styleable.*;
+import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference;
+import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference_mp_entry_descriptions;
+import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference_mp_entry_values;
 
 /**
  * Created by yarolegovich on 06.05.2016.

@@ -10,12 +10,13 @@ import android.util.TypedValue;
  */
 public class Utils {
 
-    private Utils() {}
+    private Utils() {
+    }
 
     public static int dpToPixels(Context context, int dp) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return Math.round(dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        return Math.round(dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     public static int clickableBackground(Context context) {

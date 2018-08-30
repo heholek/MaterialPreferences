@@ -53,14 +53,14 @@ public abstract class AbsMaterialCheckablePreference extends AbsMaterialPreferen
     }
 
     @Override
-    public void setStorageModule(StorageModule storageModule) {
-        super.setStorageModule(storageModule);
-        checkableWidget.setChecked(getValue());
-    }
-
-    @Override
     public void setValue(Boolean value) {
         super.setValue(value);
         storageModule.saveBoolean(key, value);
+    }
+
+    @Override
+    public void setStorageModule(StorageModule storageModule) {
+        super.setStorageModule(storageModule);
+        checkableWidget.setChecked(getValue());
     }
 }
