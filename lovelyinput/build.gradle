@@ -1,15 +1,15 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion rootProject.targetSdkVersion
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -19,17 +19,7 @@ android {
 }
 
 dependencies {
-    implementation project(':library')
-    implementation 'com.yarolegovich:lovely-dialog:1.1.0'
-    implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
-}
-
-publish {
-    artifactId = 'lovelyinput'
-    userOrg = rootProject.userOrg
-    groupId = rootProject.groupId
-    uploadName = rootProject.uploadName
-    publishVersion = '1.0.9'
-    description = 'Implementation of UserInputModule for MaterialPreferences that uses LovelyDialogs library.'
-    licences = rootProject.licences
+    api project(':MaterialPreferences')
+    api 'com.yarolegovich:lovely-dialog:1.1.0'
+    api 'com.android.support:appcompat-v7:27.1.1'
 }

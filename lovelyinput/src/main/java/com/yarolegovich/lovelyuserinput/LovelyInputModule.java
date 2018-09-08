@@ -17,23 +17,18 @@ import java.util.Set;
  * Created by yarolegovich on 16.05.2016.
  */
 public class LovelyInputModule extends StandardUserInputModule {
-
     private Map<String, Integer> keyIconMappings;
     private Map<String, CharSequence> keyTitleMapping;
     private Map<String, CharSequence> keyMessageMapping;
-
     private int topColor;
+    private int tintColor;
 
     public LovelyInputModule(Context context) {
         super(context);
     }
 
     @Override
-    public void showEditTextInput(
-            String key,
-            CharSequence title,
-            CharSequence defaultValue,
-            final Listener<String> listener) {
+    public void showEditTextInput(String key, CharSequence title, CharSequence defaultValue, final Listener<String> listener) {
         standardInit(new LovelyTextInputDialog(context)
                 .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
                     @Override
@@ -45,13 +40,7 @@ public class LovelyInputModule extends StandardUserInputModule {
     }
 
     @Override
-    public void showSingleChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            final CharSequence[] values,
-            int selected,
-            final Listener<String> listener) {
+    public void showSingleChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, int selected, final Listener<String> listener) {
         standardInit(new LovelyChoiceDialog(context)
                 .setItems(displayItems, new LovelyChoiceDialog.OnItemSelectedListener<CharSequence>() {
                     @Override
@@ -63,13 +52,7 @@ public class LovelyInputModule extends StandardUserInputModule {
     }
 
     @Override
-    public void showMultiChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            final CharSequence[] values,
-            boolean[] itemStates,
-            final Listener<Set<String>> listener) {
+    public void showMultiChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, boolean[] itemStates, final Listener<Set<String>> listener) {
         standardInit(new LovelyChoiceDialog(context)
                 .setItemsMultiChoice(displayItems, itemStates, new LovelyChoiceDialog.OnItemsSelectedListener<CharSequence>() {
                     @Override
@@ -87,13 +70,11 @@ public class LovelyInputModule extends StandardUserInputModule {
     private AbsLovelyDialog standardInit(AbsLovelyDialog dialog, String key, CharSequence prefTitle) {
         CharSequence title = getTitle(key, prefTitle);
         CharSequence message = keyMessageMapping.get(key);
-        if (!TextUtils.isEmpty(title)) {
-            dialog.setTitle(title);
-        }
-        if (!TextUtils.isEmpty(message)) {
-            dialog.setMessage(message);
-        }
-        return dialog.setTopColor(topColor).setIcon(keyIconMappings.get(key));
+        if (!TextUtils.isEmpty(title)) dialog.setTitle(title);
+        if (!TextUtils.isEmpty(message)) dialog.setMessage(message);
+        return dialog.setTopColor(topColor)
+                .setIconTintColor(tintColor)
+                .setIcon(keyIconMappings.get(key));
     }
 
     private CharSequence getTitle(String key, CharSequence prefTitle) {
@@ -119,6 +100,11 @@ public class LovelyInputModule extends StandardUserInputModule {
 
     public LovelyInputModule setTopColor(int topColor) {
         this.topColor = topColor;
+        return this;
+    }
+
+    public LovelyInputModule setTintColor(int tintColor) {
+        this.tintColor = tintColor;
         return this;
     }
 }
