@@ -20,6 +20,8 @@ public class LovelyInputModule extends StandardUserInputModule {
     private Map<String, Integer> keyIconMappings;
     private Map<String, CharSequence> keyTitleMapping;
     private Map<String, CharSequence> keyMessageMapping;
+    private Map<String, LovelyTextInputDialog.TextFilter> keyFilterMappings;
+    private Map<String, Integer> keyFilterErrorMappings;
     private int topColor;
     private int tintColor;
 
@@ -30,6 +32,7 @@ public class LovelyInputModule extends StandardUserInputModule {
     @Override
     public void showEditTextInput(String key, CharSequence title, CharSequence defaultValue, final Listener<String> listener) {
         standardInit(new LovelyTextInputDialog(context)
+                .setInitialInput(defaultValue.toString())
                 .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
                     @Override
                     public void onTextInputConfirmed(String text) {
@@ -72,6 +75,15 @@ public class LovelyInputModule extends StandardUserInputModule {
         CharSequence message = keyMessageMapping.get(key);
         if (!TextUtils.isEmpty(title)) dialog.setTitle(title);
         if (!TextUtils.isEmpty(message)) dialog.setMessage(message);
+
+        if (dialog instanceof LovelyTextInputDialog) {
+            LovelyTextInputDialog.TextFilter filter = keyFilterMappings.get(key);
+            Integer errorRes = keyFilterErrorMappings.get(key);
+
+            if (filter != null && errorRes != null && errorRes != 0)
+                ((LovelyTextInputDialog) dialog).setInputFilter(errorRes, filter);
+        }
+
         return dialog.setTopColor(topColor)
                 .setIconTintColor(tintColor)
                 .setIcon(keyIconMappings.get(key));
@@ -83,18 +95,28 @@ public class LovelyInputModule extends StandardUserInputModule {
                 prefTitle;
     }
 
-    public LovelyInputModule setKeyIconMappings(Map<String, Integer> keyIconMappings) {
-        this.keyIconMappings = keyIconMappings;
+    public LovelyInputModule setKeyIconMappings(Map<String, Integer> mappings) {
+        this.keyIconMappings = mappings;
         return this;
     }
 
-    public LovelyInputModule setKeyTitleMapping(Map<String, CharSequence> keyTitleMapping) {
-        this.keyTitleMapping = keyTitleMapping;
+    public LovelyInputModule setKeyTitleMapping(Map<String, CharSequence> mappings) {
+        this.keyTitleMapping = mappings;
         return this;
     }
 
-    public LovelyInputModule setKeyMessageMapping(Map<String, CharSequence> keyMessageMapping) {
-        this.keyMessageMapping = keyMessageMapping;
+    public LovelyInputModule setKeyMessageMapping(Map<String, CharSequence> mappings) {
+        this.keyMessageMapping = mappings;
+        return this;
+    }
+
+    public LovelyInputModule setKeyFilterMappings(Map<String, LovelyTextInputDialog.TextFilter> mappings) {
+        this.keyFilterMappings = mappings;
+        return this;
+    }
+
+    public LovelyInputModule setKeyFilterErrorMappings(Map<String, Integer> mappings) {
+        this.keyFilterErrorMappings = mappings;
         return this;
     }
 
