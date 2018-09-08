@@ -8,6 +8,10 @@ import android.util.AttributeSet;
  */
 public class MaterialStandardPreference extends AbsMaterialPreference<Void> {
 
+    public MaterialStandardPreference(Context context) {
+        super(context, null);
+    }
+
     public MaterialStandardPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
