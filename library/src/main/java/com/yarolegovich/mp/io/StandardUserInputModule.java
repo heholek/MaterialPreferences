@@ -29,11 +29,7 @@ public class StandardUserInputModule implements UserInputModule {
     }
 
     @Override
-    public void showEditTextInput(
-            String key,
-            CharSequence title,
-            CharSequence defaultValue,
-            final Listener<String> listener) {
+    public void showEditTextInput(String key, CharSequence title, CharSequence defaultValue, final Listener<String> listener) {
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_edittext, null);
         final EditText inputField = view.findViewById(R.id.mp_text_input);
 
@@ -56,13 +52,7 @@ public class StandardUserInputModule implements UserInputModule {
     }
 
     @Override
-    public void showSingleChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            final CharSequence[] values,
-            int selected,
-            final Listener<String> listener) {
+    public void showSingleChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, int selected, final Listener<String> listener) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setSingleChoiceItems(displayItems, selected, new DialogInterface.OnClickListener() {
@@ -84,13 +74,7 @@ public class StandardUserInputModule implements UserInputModule {
     }
 
     @Override
-    public void showMultiChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            final CharSequence[] values,
-            final boolean[] itemStates,
-            final Listener<Set<String>> listener) {
+    public void showMultiChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, final boolean[] itemStates, final Listener<Set<String>> listener) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMultiChoiceItems(displayItems, itemStates, new DialogInterface.OnMultiChoiceClickListener() {
@@ -115,11 +99,7 @@ public class StandardUserInputModule implements UserInputModule {
     }
 
     @Override
-    public void showColorSelectionInput(
-            String key,
-            CharSequence title,
-            int defaultColor,
-            final Listener<Integer> colorListener) {
+    public void showColorSelectionInput(String key, CharSequence title, int defaultColor, final Listener<Integer> colorListener) {
         FragmentActivity activity;
         try {
             activity = (FragmentActivity) context;
