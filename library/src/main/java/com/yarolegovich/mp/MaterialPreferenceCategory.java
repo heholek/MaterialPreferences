@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -75,6 +76,11 @@ public class MaterialPreferenceCategory extends CardView {
         if (titleColor != -1) {
             title.setTextColor(titleColor);
         }
+    }
+
+    public void setTitle(@StringRes int titleRes) {
+        title.setVisibility(View.VISIBLE);
+        title.setText(titleRes);
     }
 
     public void setTitle(String titleText) {
