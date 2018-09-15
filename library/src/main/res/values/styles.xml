@@ -1,11 +1,10 @@
 <resources>
-
     <style name="PreferenceHeaderBase">
         <item name="android:paddingLeft">@dimen/side_margin</item>
         <item name="android:paddingRight">@dimen/side_margin</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?android:attr/colorPrimary</item>
         <item name="android:singleLine">true</item>
     </style>
 
@@ -35,5 +34,4 @@
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
     </style>
-
 </resources>
