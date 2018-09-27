@@ -4,23 +4,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import static com.yarolegovich.mp.util.Utils.dpToPixels;
 
 /**
  * Created by yarolegovich on 01.05.2016.
  */
 public class MaterialPreferenceCategory extends CardView {
-
-    private ViewGroup container;
+    private LinearLayout container;
     private TextView title;
 
     public MaterialPreferenceCategory(Context context) {
@@ -54,14 +52,7 @@ public class MaterialPreferenceCategory extends CardView {
         }
 
         inflate(getContext(), R.layout.view_preference_category, this);
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, dpToPixels(getContext(), 4));
-
         setUseCompatPadding(true);
-
         setRadius(0);
 
         container = findViewById(R.id.mpc_container);
@@ -75,6 +66,11 @@ public class MaterialPreferenceCategory extends CardView {
         if (titleColor != -1) {
             title.setTextColor(titleColor);
         }
+    }
+
+    public void setTitle(@StringRes int titleRes) {
+        title.setVisibility(View.VISIBLE);
+        title.setText(titleRes);
     }
 
     public void setTitle(String titleText) {
