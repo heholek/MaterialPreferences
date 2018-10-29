@@ -7,12 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.yarolegovich.mp.R;
 import com.yarolegovich.mp.util.Utils;
+
+import androidx.annotation.ColorInt;
 
 /**
  * Created by yarolegovich on 06.05.2016.

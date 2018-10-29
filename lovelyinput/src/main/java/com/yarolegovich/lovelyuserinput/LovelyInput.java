@@ -2,15 +2,16 @@ package com.yarolegovich.lovelyuserinput;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
 
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 import com.yarolegovich.mp.io.UserInputModule;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 /**
  * Created by yarolegovich on 16.05.2016.

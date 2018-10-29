@@ -3,8 +3,6 @@ package com.yarolegovich.mp.io;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +15,9 @@ import com.yarolegovich.mp.R;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 
 /**
  * Created by yarolegovich on 06.05.2016.

@@ -2,11 +2,12 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
+
+import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference;
 import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference_mp_entry_descriptions;

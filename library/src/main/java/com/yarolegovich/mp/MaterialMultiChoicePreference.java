@@ -2,7 +2,6 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.MaterialMultiChoicePreference;
 import static com.yarolegovich.mp.R.styleable.MaterialMultiChoicePreference_mp_default_selected;

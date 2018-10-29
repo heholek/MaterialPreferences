@@ -1,11 +1,12 @@
 package com.yarolegovich.mp;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by yarolegovich on 01.05.2016.

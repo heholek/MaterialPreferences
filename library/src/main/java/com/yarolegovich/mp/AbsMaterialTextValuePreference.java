@@ -2,8 +2,6 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -13,6 +11,9 @@ import com.yarolegovich.mp.io.UserInputModule;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference;
 import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference_mp_show_value;

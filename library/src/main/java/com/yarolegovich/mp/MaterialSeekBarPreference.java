@@ -2,8 +2,6 @@ package com.yarolegovich.mp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.SeekBar;
@@ -12,6 +10,9 @@ import android.widget.TextView;
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
 import com.yarolegovich.mp.util.Utils;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSeekBar;
 
 import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference;
 import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference_mp_max_val;
