@@ -1,5 +1,6 @@
 package com.yarolegovich.mp.io;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ public class StandardUserInputModule implements UserInputModule {
     }
 
     @Override
+    @SuppressLint("InflateParams")
     public void showEditTextInput(String key, CharSequence title, CharSequence defaultValue, final Listener<String> listener) {
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_edittext, null);
         final EditText inputField = view.findViewById(R.id.mp_text_input);

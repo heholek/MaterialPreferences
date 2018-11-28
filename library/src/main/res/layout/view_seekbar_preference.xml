@@ -36,10 +36,8 @@
             style="@style/PreferenceValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:visibility="gone" />
-
     </LinearLayout>
-
-
 </LinearLayout>
