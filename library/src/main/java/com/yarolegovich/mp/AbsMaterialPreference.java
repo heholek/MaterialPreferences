@@ -178,11 +178,8 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
     }
 
     public void setOverrideClickListener(final OverrideOnClickListener listener) {
-        super.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!listener.onClick(v)) compositeClickListener.onClick(v);
-            }
+        super.setOnClickListener(v -> {
+            if (!listener.onClick(v)) compositeClickListener.onClick(v);
         });
     }
 

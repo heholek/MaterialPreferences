@@ -5,11 +5,19 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by yarolegovich on 01.05.2016.
  */
 public class MaterialChoicePreference extends AbsMaterialListPreference<String> {
+
+    public MaterialChoicePreference(Context context, String defaultValue, String key, UserInputModule userInputModule, StorageModule storageModule, int showValueMode, CharSequence[] entries, CharSequence[] entryValues) {
+        super(context, defaultValue, key, userInputModule, storageModule, showValueMode, entries, entryValues);
+        init(null);
+    }
 
     public MaterialChoicePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -22,7 +30,6 @@ public class MaterialChoicePreference extends AbsMaterialListPreference<String> 
     public MaterialChoicePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
-
 
     @Override
     public String getValue() {
@@ -68,5 +75,30 @@ public class MaterialChoicePreference extends AbsMaterialListPreference<String> 
             }
         }
         return -1;
+    }
+
+    public static class Builder extends AbsMaterialTextValuePreference.Builder<MaterialChoicePreference, String> {
+        private String[] entries;
+        private String[] entryValues;
+
+        public Builder(Context context) {
+            super(context);
+        }
+
+        public MaterialChoicePreference.Builder entries(String... entries) {
+            this.entries = entries;
+            return this;
+        }
+
+        public MaterialChoicePreference.Builder entryValues(String... entryValues) {
+            this.entryValues = entryValues;
+            return this;
+        }
+
+        @NonNull
+        @Override
+        public MaterialChoicePreference build() {
+            return new MaterialChoicePreference(context, defaultValue, key, userInputModule, storageModule, showValueMode, entries, entryValues);
+        }
     }
 }

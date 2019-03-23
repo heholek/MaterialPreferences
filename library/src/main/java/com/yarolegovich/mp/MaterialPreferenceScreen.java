@@ -19,9 +19,7 @@ import java.util.List;
  * Created by yarolegovich on 01.05.2016.
  */
 public class MaterialPreferenceScreen extends ScrollView {
-
     private LinearLayout container;
-
     private UserInputModule userInputModule;
     private StorageModule storageModule;
 
@@ -59,47 +57,31 @@ public class MaterialPreferenceScreen extends ScrollView {
     }
 
     public void setVisibilityController(int controllerId, List<Integer> controlledIds, boolean showWhenChecked) {
-        setVisibilityController(
-                (AbsMaterialCheckablePreference) findViewById(controllerId),
-                controlledIds, showWhenChecked
-        );
+        setVisibilityController(findViewById(controllerId), controlledIds, showWhenChecked);
     }
 
-    public void setVisibilityController(
-            final AbsMaterialCheckablePreference controller,
-            final AbsMaterialPreference[] controlled,
-            final boolean showWhenChecked) {
+    public void setVisibilityController(AbsMaterialCheckablePreference controller, AbsMaterialPreference[] controlled, boolean showWhenChecked) {
         boolean shouldShow = showWhenChecked ? controller.getValue() : !controller.getValue();
         int initialVisibility = shouldShow ? View.VISIBLE : View.GONE;
         for (AbsMaterialPreference c : controlled)
             c.setVisibility(initialVisibility);
-        controller.addPreferenceValueListener(new AbsMaterialPreference.PreferenceValueChangedListener<Boolean>() {
-            @Override
-            public void onValueChanged(Boolean value) {
-                boolean shouldShow = showWhenChecked ? value : !value;
-                int visibility = shouldShow ? View.VISIBLE : View.GONE;
-                for (AbsMaterialPreference c : controlled)
-                    c.setVisibility(visibility);
-            }
+
+        controller.addPreferenceValueListener(value -> {
+            boolean shouldShow1 = showWhenChecked ? value : !value;
+            int visibility = shouldShow1 ? View.VISIBLE : View.GONE;
+            for (AbsMaterialPreference c : controlled)
+                c.setVisibility(visibility);
         });
     }
 
-    public void setVisibilityController(
-            final AbsMaterialCheckablePreference controller,
-            final List<Integer> controlledIds,
-            final boolean showWhenChecked) {
+    public void setVisibilityController(AbsMaterialCheckablePreference controller, List<Integer> controlledIds, boolean showWhenChecked) {
         boolean shouldShow = showWhenChecked ? controller.getValue() : !controller.getValue();
         int initialVisibility = shouldShow ? View.VISIBLE : View.GONE;
         changeViewsVisibility(this, controlledIds, initialVisibility);
-        controller.addPreferenceValueListener(new AbsMaterialPreference.PreferenceValueChangedListener<Boolean>() {
-            @Override
-            public void onValueChanged(Boolean value) {
-                boolean shouldShow = showWhenChecked ? value : !value;
-                int visibility = shouldShow ? View.VISIBLE : View.GONE;
-                changeViewsVisibility(MaterialPreferenceScreen.this,
-                        controlledIds,
-                        visibility);
-            }
+        controller.addPreferenceValueListener(value -> {
+            boolean shouldShow1 = showWhenChecked ? value : !value;
+            int visibility = shouldShow1 ? View.VISIBLE : View.GONE;
+            changeViewsVisibility(this, controlledIds, visibility);
         });
     }
 
@@ -113,6 +95,7 @@ public class MaterialPreferenceScreen extends ScrollView {
                     changeViewsVisibility((ViewGroup) child, viewIds, visibility);
                 }
             }
+
             if (viewIds.contains(child.getId())) {
                 child.setVisibility(visibility);
             }
