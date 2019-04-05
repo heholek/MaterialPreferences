@@ -3,14 +3,12 @@ package com.yarolegovich.mp.io;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
 import com.pavelsikun.vintagechroma.ChromaDialog;
 import com.pavelsikun.vintagechroma.IndicatorMode;
-import com.pavelsikun.vintagechroma.OnColorSelectedListener;
 import com.pavelsikun.vintagechroma.colormode.ColorMode;
 import com.yarolegovich.mp.R;
 
@@ -45,12 +43,9 @@ public class StandardUserInputModule implements UserInputModule {
                 .setTitle(title)
                 .setView(view)
                 .show();
-        view.findViewById(R.id.mp_btn_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onInput(inputField.getText().toString());
-                dialog.dismiss();
-            }
+        view.findViewById(R.id.mp_btn_confirm).setOnClickListener(v -> {
+            listener.onInput(inputField.getText().toString());
+            dialog.dismiss();
         });
     }
 
@@ -58,21 +53,11 @@ public class StandardUserInputModule implements UserInputModule {
     public void showSingleChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, int selected, final Listener<String> listener) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
-                .setSingleChoiceItems(displayItems, selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selected = values[which].toString();
-                        listener.onInput(selected);
-                        dialog.dismiss();
-                    }
+                .setSingleChoiceItems(displayItems, selected, (dialog, which) -> {
+                    String selected1 = values[which].toString();
+                    listener.onInput(selected1);
+                    dialog.dismiss();
                 })
-                /*.setItems(displayItems, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selected = values[which].toString();
-                        listener.onInput(selected);
-                    }
-                })*/
                 .show();
     }
 
@@ -80,23 +65,15 @@ public class StandardUserInputModule implements UserInputModule {
     public void showMultiChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, final boolean[] itemStates, final Listener<Set<String>> listener) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
-                .setMultiChoiceItems(displayItems, itemStates, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        itemStates[which] = isChecked;
-                    }
-                })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Set<String> result = new HashSet<>();
-                        for (int i = 0; i < values.length; i++) {
-                            if (itemStates[i]) {
-                                result.add(values[i].toString());
-                            }
+                .setMultiChoiceItems(displayItems, itemStates, (dialog, which, isChecked) -> itemStates[which] = isChecked)
+                .setOnDismissListener(dialog -> {
+                    Set<String> result = new HashSet<>();
+                    for (int i = 0; i < values.length; i++) {
+                        if (itemStates[i]) {
+                            result.add(values[i].toString());
                         }
-                        listener.onInput(result);
                     }
+                    listener.onInput(result);
                 })
                 .show();
     }
@@ -114,12 +91,7 @@ public class StandardUserInputModule implements UserInputModule {
                 .initialColor(defaultColor)
                 .colorMode(ColorMode.ARGB)
                 .indicatorMode(IndicatorMode.HEX)
-                .onColorSelected(new OnColorSelectedListener() {
-                    @Override
-                    public void onColorSelected(int color) {
-                        colorListener.onInput(color);
-                    }
-                })
+                .onColorSelected(colorListener::onInput)
                 .create()
                 .show(activity.getSupportFragmentManager(), tag);
     }
