@@ -3,13 +3,15 @@ package com.yarolegovich.lovelyuserinput;
 import android.content.Context;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.yarolegovich.lovelydialog.AbsLovelyDialog;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 import com.yarolegovich.mp.io.StandardUserInputModule;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,58 +27,58 @@ public class LovelyInputModule extends StandardUserInputModule {
     private int topColor;
     private int tintColor;
 
-    public LovelyInputModule(Context context) {
+    public LovelyInputModule(@NonNull Context context) {
         super(context);
     }
 
     @Override
-    public void showEditTextInput(String key, CharSequence title, CharSequence defaultValue, final Listener<String> listener) {
-        standardInit(new LovelyTextInputDialog(context)
-                .setInitialInput(defaultValue.toString())
-                .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
-                    @Override
-                    public void onTextInputConfirmed(String text) {
-                        listener.onInput(text);
-                    }
-                }), key, title)
-                .show();
+    public void showEditTextInput(@NonNull String key, @NonNull CharSequence title, @Nullable CharSequence defaultValue, @NonNull Listener<String> listener) {
+        AbsLovelyDialog dialog = standardInit(new LovelyTextInputDialog(context)
+                .setInitialInput(defaultValue != null ? defaultValue.toString() : null)
+                .setConfirmButton(android.R.string.ok, listener::onInput), key, title);
+
+        if (dialog != null) dialog.show();
+        else super.showEditTextInput(key, title, defaultValue, listener);
     }
 
     @Override
-    public void showSingleChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, int selected, final Listener<String> listener) {
-        standardInit(new LovelyChoiceDialog(context)
-                .setItems(displayItems, new LovelyChoiceDialog.OnItemSelectedListener<CharSequence>() {
-                    @Override
-                    public void onItemSelected(int position, CharSequence item) {
-                        listener.onInput(values[position].toString());
-                    }
-                }), key, title)
-                .show();
+    public void showSingleChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull CharSequence[] values, int selected, @NonNull Listener<String> listener) {
+        AbsLovelyDialog dialog = standardInit(new LovelyChoiceDialog(context)
+                .setItems(displayItems, (position, item) -> listener.onInput(values[position].toString())), key, title);
+
+        if (dialog != null) dialog.show();
+        else super.showSingleChoiceInput(key, title, displayItems, values, selected, listener);
     }
 
     @Override
-    public void showMultiChoiceInput(String key, CharSequence title, CharSequence[] displayItems, final CharSequence[] values, boolean[] itemStates, final Listener<Set<String>> listener) {
-        standardInit(new LovelyChoiceDialog(context)
-                .setItemsMultiChoice(displayItems, itemStates, new LovelyChoiceDialog.OnItemsSelectedListener<CharSequence>() {
-                    @Override
-                    public void onItemsSelected(List<Integer> positions, List<CharSequence> items) {
-                        Set<String> selected = new HashSet<>();
-                        for (int position : positions) {
-                            selected.add(values[position].toString());
-                        }
-                        listener.onInput(selected);
-                    }
-                }), key, title)
-                .show();
+    public void showMultiChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull CharSequence[] values, @NonNull boolean[] itemStates, @NonNull Listener<Set<String>> listener) {
+        AbsLovelyDialog dialog = standardInit(new LovelyChoiceDialog(context)
+                .setItemsMultiChoice(displayItems, itemStates, (positions, items) -> {
+                    Set<String> selected = new HashSet<>();
+                    for (int position : positions)
+                        selected.add(values[position].toString());
+                    listener.onInput(selected);
+                }), key, title);
+
+        if (dialog != null) dialog.show();
+        else super.showMultiChoiceInput(key, title, displayItems, values, itemStates, listener);
     }
 
-    private AbsLovelyDialog standardInit(AbsLovelyDialog dialog, String key, CharSequence prefTitle) {
+    @Nullable
+    private AbsLovelyDialog standardInit(@NonNull AbsLovelyDialog dialog, @NonNull String key, @NonNull CharSequence prefTitle) {
         CharSequence title = getTitle(key, prefTitle);
-        CharSequence message = keyMessageMapping.get(key);
+        CharSequence message;
+        Integer iconRes;
+        if ((message = keyMessageMapping.get(key)) == null || (iconRes = keyIconMappings.get(key)) == null)
+            return null;
+
         if (!TextUtils.isEmpty(title)) dialog.setTitle(title);
         if (!TextUtils.isEmpty(message)) dialog.setMessage(message);
 
         if (dialog instanceof LovelyTextInputDialog) {
+            if (!keyFilterMappings.containsKey(key) || !keyFilterErrorMappings.containsKey(key))
+                return null;
+
             LovelyTextInputDialog.TextFilter filter = keyFilterMappings.get(key);
             Integer errorRes = keyFilterErrorMappings.get(key);
 
@@ -86,45 +88,52 @@ public class LovelyInputModule extends StandardUserInputModule {
 
         return dialog.setTopColor(topColor)
                 .setIconTintColor(tintColor)
-                .setIcon(keyIconMappings.get(key));
+                .setIcon(iconRes);
     }
 
-    private CharSequence getTitle(String key, CharSequence prefTitle) {
-        return keyTitleMapping.keySet().contains(key) ?
-                keyTitleMapping.get(key) :
-                prefTitle;
+    @NonNull
+    private CharSequence getTitle(@NonNull String key, @NonNull CharSequence prefTitle) {
+        CharSequence title;
+        return (title = keyTitleMapping.get(key)) == null ? prefTitle : title;
     }
 
+    @NonNull
     public LovelyInputModule setKeyIconMappings(Map<String, Integer> mappings) {
         this.keyIconMappings = mappings;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setKeyTitleMapping(Map<String, CharSequence> mappings) {
         this.keyTitleMapping = mappings;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setKeyMessageMapping(Map<String, CharSequence> mappings) {
         this.keyMessageMapping = mappings;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setKeyFilterMappings(Map<String, LovelyTextInputDialog.TextFilter> mappings) {
         this.keyFilterMappings = mappings;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setKeyFilterErrorMappings(Map<String, Integer> mappings) {
         this.keyFilterErrorMappings = mappings;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setTopColor(int topColor) {
         this.topColor = topColor;
         return this;
     }
 
+    @NonNull
     public LovelyInputModule setTintColor(int tintColor) {
         this.tintColor = tintColor;
         return this;

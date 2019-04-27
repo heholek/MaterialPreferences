@@ -6,12 +6,12 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
 import com.yarolegovich.mp.view.ColorView;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.MaterialColorPreference;
 import static com.yarolegovich.mp.R.styleable.MaterialColorPreference_mp_border_color;
@@ -88,7 +88,7 @@ public class MaterialColorPreference extends AbsMaterialPreference<Integer> impl
     }
 
     @Override
-    public void onInput(Integer value) {
+    public void onInput(@NonNull Integer value) {
         setValue(value);
     }
 

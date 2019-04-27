@@ -6,14 +6,14 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference;
 import static com.yarolegovich.mp.R.styleable.AbsMaterialTextValuePreference_mp_show_value;
@@ -70,7 +70,7 @@ public abstract class AbsMaterialTextValuePreference<T> extends AbsMaterialPrefe
     }
 
     @Override
-    public void onInput(T value) {
+    public void onInput(@NonNull T value) {
         setValue(value);
     }
 

@@ -2,6 +2,9 @@ package com.yarolegovich.mp.io;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.Set;
 
 /**
@@ -9,39 +12,20 @@ import java.util.Set;
  */
 public interface UserInputModule {
 
-    void showEditTextInput(
-            String key,
-            CharSequence title,
-            CharSequence defaultValue,
-            Listener<String> listener);
+    void showEditTextInput(@NonNull String key, @NonNull CharSequence title, @Nullable CharSequence defaultValue, @NonNull Listener<String> listener);
 
-    void showSingleChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            CharSequence[] values,
-            int selected,
-            Listener<String> listener);
+    void showSingleChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull CharSequence[] values, int selected, @NonNull Listener<String> listener);
 
-    void showMultiChoiceInput(
-            String key,
-            CharSequence title,
-            CharSequence[] displayItems,
-            CharSequence[] values,
-            boolean[] defaultSelection,
-            Listener<Set<String>> listener);
+    void showMultiChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull CharSequence[] values, @NonNull boolean[] defaultSelection, @NonNull Listener<Set<String>> listener);
 
-    void showColorSelectionInput(
-            String key,
-            CharSequence title,
-            int defaultColor,
-            Listener<Integer> color);
+    void showColorSelectionInput(@NonNull String key, @NonNull CharSequence title, int defaultColor, @NonNull Listener<Integer> color);
 
     interface Factory {
-        UserInputModule create(Context context);
+        @NonNull
+        UserInputModule create(@NonNull Context context);
     }
 
     interface Listener<T> {
-        void onInput(T value);
+        void onInput(@NonNull T value);
     }
 }

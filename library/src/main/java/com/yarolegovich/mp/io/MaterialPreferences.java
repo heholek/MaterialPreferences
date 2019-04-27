@@ -2,6 +2,8 @@ package com.yarolegovich.mp.io;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by yarolegovich on 05.05.2016.
  */
@@ -45,8 +47,9 @@ public class MaterialPreferences {
 
 
     private static class StandardUserInputFactory implements UserInputModule.Factory {
+        @NonNull
         @Override
-        public UserInputModule create(Context context) {
+        public UserInputModule create(@NonNull Context context) {
             return new StandardUserInputModule(context);
         }
     }
