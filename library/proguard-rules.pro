@@ -1,1 +1,3 @@
+-dontobfuscate
+
 -keepclasseswithmembers com.pavelsikun.vintagechroma.ChromaPreferenceCompat
