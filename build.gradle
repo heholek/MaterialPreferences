@@ -3,9 +3,9 @@ buildscript {
         jcenter()
         google()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath 'com.novoda:bintray-release:0.8.0'
     }
 }
 
@@ -19,17 +19,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-ext {
-    userOrg = 'yarolegovich'
-    groupId = 'com.yarolegovich'
-    uploadName = 'MaterialPreferences'
-    licences = ['Apache-2.0']
-
-    compileSdkVersion = 27
-    buildToolsVersion = '26.0.2'
-    targetSdkVersion = 27
-
-    supportLibVersion = '27.0.2'
-}
-
