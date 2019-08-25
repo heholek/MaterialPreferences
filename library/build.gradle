@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.material:material:1.1.0-alpha09'
     implementation 'androidx.cardview:cardview:1.0.0'
     api 'com.pavelsikun:vintage-chroma:1.5'
 }

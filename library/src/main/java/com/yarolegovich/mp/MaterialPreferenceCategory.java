@@ -12,13 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.card.MaterialCardView;
 
 /**
  * Created by yarolegovich on 01.05.2016.
  */
-public class MaterialPreferenceCategory extends CardView {
+public class MaterialPreferenceCategory extends MaterialCardView {
     private LinearLayout container;
     private TextView title;
 
