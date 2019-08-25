@@ -6,6 +6,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
+
         versionCode 1
         versionName "1.0"
     }
@@ -17,6 +18,6 @@ android {
 }
 
 dependencies {
-    api project(':MaterialPreferences')
+    implementation project(':library')
     api 'com.yarolegovich:lovely-dialog:1.1.0'
 }
