@@ -7,12 +7,12 @@ import android.view.Gravity;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSeekBar;
+
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
 import com.yarolegovich.mp.util.Utils;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatSeekBar;
 
 import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference;
 import static com.yarolegovich.mp.R.styleable.MaterialSeekBarPreference_mp_max_val;
@@ -89,8 +89,8 @@ public class MaterialSeekBarPreference extends AbsMaterialPreference<Integer> {
     public Integer getValue() {
         try {
             return storageModule.getInt(key, Integer.parseInt(defaultValue));
-        } catch (NumberFormatException e) {
-            throw new AssertionError(getContext().getString(R.string.exc_not_int_default));
+        } catch (NumberFormatException ex) {
+            throw new AssertionError("Please provide integer mp_default_value");
         }
     }
 

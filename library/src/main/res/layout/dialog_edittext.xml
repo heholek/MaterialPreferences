@@ -37,5 +37,4 @@
         android:textAllCaps="true"
         android:textColor="?android:textColorPrimary"
         android:textStyle="bold" />
-
 </LinearLayout>

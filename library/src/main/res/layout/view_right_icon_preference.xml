@@ -7,7 +7,7 @@
         android:id="@id/mp_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="@dimen/side_margin"
-        android:layout_marginLeft="@dimen/side_margin"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:visibility="gone" />
 </merge>

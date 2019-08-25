@@ -7,16 +7,12 @@
     </declare-styleable>
 
     <declare-styleable name="AbsMaterialPreference">
-
         <attr name="mp_icon" format="reference" />
         <attr name="mp_title" format="string" />
         <attr name="mp_summary" format="string" />
-
         <attr name="mp_icon_tint" format="color" />
-
         <attr name="mp_key" format="string" />
         <attr name="mp_default_value" format="string" />
-
     </declare-styleable>
 
     <declare-styleable name="AbsMaterialTextValuePreference">
@@ -61,6 +57,4 @@
             <enum name="square" value="1" />
         </attr>
     </declare-styleable>
-
-
 </resources>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-
     <include layout="@layout/view_icon" />
-
     <include layout="@layout/view_title_summary" />
 
     <androidx.recyclerview.widget.SwitchCompat
@@ -10,5 +8,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false" />
-
 </merge>

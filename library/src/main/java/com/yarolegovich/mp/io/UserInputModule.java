@@ -18,8 +18,6 @@ public interface UserInputModule {
 
     void showMultiChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull CharSequence[] values, @NonNull boolean[] defaultSelection, @NonNull Listener<Set<String>> listener);
 
-    void showColorSelectionInput(@NonNull String key, @NonNull CharSequence title, int defaultColor, @NonNull Listener<Integer> color);
-
     interface Factory {
         @NonNull
         UserInputModule create(@NonNull Context context);

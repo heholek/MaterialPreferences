@@ -11,11 +11,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
 
-import com.pavelsikun.vintagechroma.ChromaDialog;
-import com.pavelsikun.vintagechroma.IndicatorMode;
-import com.pavelsikun.vintagechroma.colormode.ColorMode;
 import com.yarolegovich.mp.R;
 
 import java.util.HashSet;
@@ -79,24 +75,5 @@ public class StandardUserInputModule implements UserInputModule {
                     listener.onInput(result);
                 })
                 .show();
-    }
-
-    @Override
-    public void showColorSelectionInput(@NonNull String key, @NonNull CharSequence title, int defaultColor, @NonNull final Listener<Integer> colorListener) {
-        FragmentActivity activity;
-        try {
-            activity = (FragmentActivity) context;
-        } catch (ClassCastException exc) {
-            throw new AssertionError(context.getString(R.string.exc_not_frag_activity_subclass));
-        }
-
-        String tag = colorListener.getClass().getSimpleName();
-        new ChromaDialog.Builder()
-                .initialColor(defaultColor)
-                .colorMode(ColorMode.ARGB)
-                .indicatorMode(IndicatorMode.HEX)
-                .onColorSelected(colorListener::onInput)
-                .create()
-                .show(activity.getSupportFragmentManager(), tag);
     }
 }

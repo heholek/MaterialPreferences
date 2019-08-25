@@ -24,5 +24,4 @@
             android:visibility="gone"
             tools:text="Dummy summary" />
     </LinearLayout>
-
 </merge>

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
+
 import com.yarolegovich.mp.io.StorageModule;
 import com.yarolegovich.mp.io.UserInputModule;
-
-import androidx.annotation.NonNull;
 
 import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference;
 import static com.yarolegovich.mp.R.styleable.AbsMaterialListPreference_mp_entry_descriptions;
@@ -61,7 +61,7 @@ abstract class AbsMaterialListPreference<T> extends AbsMaterialTextValuePreferen
             } else if (entryValues != null) {
                 entries = entryValues;
             } else {
-                throw new AssertionError(getContext().getString(R.string.exc_no_entries_to_list_provided));
+                throw new AssertionError("You must provide mp_entry_values or mp_entry_descriptions attribute or both in your XML layout");
             }
         }
     }
