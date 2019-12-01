@@ -46,6 +46,8 @@ public class MaterialPreferenceScreen extends ScrollView {
     }
 
     public void useGridLayout() {
+        removeAllViews();
+
         GridLayout container = new GridLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -57,6 +59,8 @@ public class MaterialPreferenceScreen extends ScrollView {
     }
 
     public void useLinearLayout() {
+        removeAllViews();
+
         LinearLayout container = new LinearLayout(getContext());
         container.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
