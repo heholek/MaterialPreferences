@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -19,19 +20,12 @@ import java.util.List;
  * Created by yarolegovich on 01.05.2016.
  */
 public class MaterialPreferenceScreen extends ScrollView {
-    private LinearLayout container;
+    private ViewGroup container;
     private UserInputModule userInputModule;
     private StorageModule storageModule;
 
     {
         setFillViewport(true);
-        LinearLayout container = new LinearLayout(getContext());
-        container.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        container.setOrientation(LinearLayout.VERTICAL);
-        addView(container);
-        this.container = container;
     }
 
     public MaterialPreferenceScreen(Context context) {
@@ -49,6 +43,27 @@ public class MaterialPreferenceScreen extends ScrollView {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MaterialPreferenceScreen(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public void useGridLayout() {
+        GridLayout container = new GridLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        container.setOrientation(GridLayout.VERTICAL);
+        container.setColumnCount(2);
+        addView(container);
+        this.container = container;
+    }
+
+    public void useLinearLayout() {
+        LinearLayout container = new LinearLayout(getContext());
+        container.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        container.setOrientation(LinearLayout.VERTICAL);
+        addView(container);
+        this.container = container;
     }
 
     public void changeViewsVisibility(List<Integer> viewIds, boolean visible) {
