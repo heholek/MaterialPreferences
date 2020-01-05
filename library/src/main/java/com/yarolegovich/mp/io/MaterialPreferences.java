@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
  * Created by yarolegovich on 05.05.2016.
  */
 public class MaterialPreferences {
-
     private static final MaterialPreferences instance = new MaterialPreferences();
     private UserInputModule.Factory userInputModuleFactory;
     private StorageModule.Factory storageModuleFactory;
@@ -18,33 +17,28 @@ public class MaterialPreferences {
         storageModuleFactory = new SharedPrefsStorageFactory(null);
     }
 
-    public static MaterialPreferences instance() {
-        return instance;
-    }
-
-    public static UserInputModule getUserInputModule(Context context) {
+    @NonNull
+    public static UserInputModule getUserInputModule(@NonNull Context context) {
         return instance.userInputModuleFactory.create(context);
     }
 
-    public static StorageModule getStorageModule(Context context) {
+    @NonNull
+    public static StorageModule getStorageModule(@NonNull Context context) {
         return instance.storageModuleFactory.create(context);
     }
 
-    public MaterialPreferences setUserInputModule(UserInputModule.Factory factory) {
-        userInputModuleFactory = factory;
-        return this;
+    public static void setUserInputModule(@NonNull UserInputModule.Factory factory) {
+        instance.userInputModuleFactory = factory;
     }
 
-    public MaterialPreferences setStorageModule(StorageModule.Factory factory) {
-        storageModuleFactory = factory;
-        return this;
+    public static void setStorageModule(@NonNull StorageModule.Factory factory) {
+        instance.storageModuleFactory = factory;
     }
 
-    public void setDefault() {
-        userInputModuleFactory = new StandardUserInputFactory();
-        storageModuleFactory = new SharedPrefsStorageFactory(null);
+    public static void setDefault() {
+        instance.userInputModuleFactory = new StandardUserInputFactory();
+        instance.storageModuleFactory = new SharedPrefsStorageFactory(null);
     }
-
 
     private static class StandardUserInputFactory implements UserInputModule.Factory {
         @NonNull

@@ -10,8 +10,9 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.StyleRes;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yarolegovich.mp.R;
 
 import java.util.HashSet;
@@ -22,9 +23,21 @@ import java.util.Set;
  */
 public class StandardUserInputModule implements UserInputModule {
     protected final Context context;
+    private final int theme;
 
     public StandardUserInputModule(@NonNull Context context) {
         this.context = context;
+        this.theme = 0;
+    }
+
+    public StandardUserInputModule(@NonNull Context context, @StyleRes int theme) {
+        this.context = context;
+        this.theme = theme;
+    }
+
+    private MaterialAlertDialogBuilder buildDialog() {
+        if (theme == 0) return new MaterialAlertDialogBuilder(context);
+        else return new MaterialAlertDialogBuilder(context, theme);
     }
 
     @Override
@@ -38,7 +51,7 @@ public class StandardUserInputModule implements UserInputModule {
             inputField.setSelection(defaultValue.length());
         }
 
-        Dialog dialog = new AlertDialog.Builder(context)
+        Dialog dialog = buildDialog()
                 .setTitle(title)
                 .setView(view)
                 .show();
@@ -51,7 +64,7 @@ public class StandardUserInputModule implements UserInputModule {
 
     @Override
     public void showSingleChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull final CharSequence[] values, int selected, @NonNull final Listener<String> listener) {
-        new AlertDialog.Builder(context)
+        buildDialog()
                 .setTitle(title)
                 .setSingleChoiceItems(displayItems, selected, (dialog, which) -> {
                     String selected1 = values[which].toString();
@@ -63,7 +76,7 @@ public class StandardUserInputModule implements UserInputModule {
 
     @Override
     public void showMultiChoiceInput(@NonNull String key, @NonNull CharSequence title, @NonNull CharSequence[] displayItems, @NonNull final CharSequence[] values, @NonNull final boolean[] itemStates, @NonNull final Listener<Set<String>> listener) {
-        new AlertDialog.Builder(context)
+        buildDialog()
                 .setTitle(title)
                 .setMultiChoiceItems(displayItems, itemStates, (dialog, which, isChecked) -> itemStates[which] = isChecked)
                 .setOnDismissListener(dialog -> {

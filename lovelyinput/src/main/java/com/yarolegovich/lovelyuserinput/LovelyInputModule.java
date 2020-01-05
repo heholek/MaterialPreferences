@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 
 import com.yarolegovich.lovelydialog.AbsLovelyDialog;
 import com.yarolegovich.lovelydialog.LovelyChoiceDialog;
@@ -29,6 +30,10 @@ public class LovelyInputModule extends StandardUserInputModule {
 
     public LovelyInputModule(@NonNull Context context) {
         super(context);
+    }
+
+    public LovelyInputModule(@NonNull Context context, @StyleRes int theme) {
+        super(context, theme);
     }
 
     @Override

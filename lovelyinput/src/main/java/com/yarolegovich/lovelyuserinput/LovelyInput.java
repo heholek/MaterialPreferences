@@ -7,6 +7,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
 
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 import com.yarolegovich.mp.io.UserInputModule;
@@ -25,6 +26,7 @@ public class LovelyInput implements UserInputModule.Factory {
     private final Map<String, Integer> keyFilterErrorMappings;
     private int color;
     private int tint;
+    private int theme = 0;
 
     private LovelyInput() {
         keyIconMappings = new HashMap<>();
@@ -41,7 +43,7 @@ public class LovelyInput implements UserInputModule.Factory {
     @NonNull
     @Override
     public UserInputModule create(@NonNull Context context) {
-        return new LovelyInputModule(context)
+        return new LovelyInputModule(context, theme)
                 .setKeyMessageMapping(keyMessageMappings)
                 .setKeyTitleMapping(keyTitleMappings)
                 .setKeyIconMappings(keyIconMappings)
@@ -62,6 +64,12 @@ public class LovelyInput implements UserInputModule.Factory {
         public Builder setTopColor(@ColorInt int color, @ColorInt int iconTint) {
             factory.color = color;
             factory.tint = iconTint;
+            return this;
+        }
+
+        @NonNull
+        public Builder setTheme(@StyleRes int theme) {
+            factory.theme = theme;
             return this;
         }
 
