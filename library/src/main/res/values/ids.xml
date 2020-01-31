@@ -5,4 +5,5 @@
     <item name="mp_summary" type="id" />
     <item name="mp_icon" type="id" />
     <item name="mp_checkable" type="id" />
+    <item name="mp_loading" type="id" />
 </resources>

@@ -11,16 +11,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.yarolegovich.mp.io.MaterialPreferences;
-import com.yarolegovich.mp.io.StorageModule;
-import com.yarolegovich.mp.io.UserInputModule;
-import com.yarolegovich.mp.util.CompositeClickListener;
-import com.yarolegovich.mp.util.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.ColorInt;
@@ -31,6 +23,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+
+import com.yarolegovich.mp.io.MaterialPreferences;
+import com.yarolegovich.mp.io.StorageModule;
+import com.yarolegovich.mp.io.UserInputModule;
+import com.yarolegovich.mp.util.CompositeClickListener;
+import com.yarolegovich.mp.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yarolegovich on 01.05.2016.
@@ -43,6 +44,7 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
     protected StorageModule storageModule;
     private TextView title;
     private TextView summary;
+    private ProgressBar loading;
     private ImageView icon;
     private CompositeClickListener compositeClickListener;
 
@@ -106,6 +108,7 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
 
         title = findViewById(R.id.mp_title);
         summary = findViewById(R.id.mp_summary);
+        loading = findViewById(R.id.mp_loading);
         icon = findViewById(R.id.mp_icon);
 
         setTitle(titleText);
@@ -124,14 +127,6 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
     public void setValue(T value) {
         for (PreferenceValueChangedListener<T> listener : preferenceValueChangedListeners)
             listener.onValueChanged(value);
-    }
-
-    public void setTitle(@StringRes int textRes) {
-        setTitle(string(textRes));
-    }
-
-    public void setSummary(@StringRes int textRes) {
-        setSummary(string(textRes));
     }
 
     public void setIcon(@DrawableRes int drawableRes) {
@@ -155,6 +150,10 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
         return title.getText().toString();
     }
 
+    public void setTitle(@StringRes int textRes) {
+        setTitle(string(textRes));
+    }
+
     public void setTitle(CharSequence text) {
         title.setVisibility(visibility(text));
         title.setText(text);
@@ -164,9 +163,33 @@ public abstract class AbsMaterialPreference<T> extends LinearLayout {
         return summary.getText().toString();
     }
 
+    public void setSummary(@StringRes int textRes) {
+        setSummary(string(textRes));
+    }
+
     public void setSummary(CharSequence text) {
         summary.setVisibility(visibility(text));
         summary.setText(text);
+    }
+
+    public void setLoading(boolean val) {
+        loading.setIndeterminate(true);
+
+        if (val) {
+            loading.setVisibility(VISIBLE);
+            summary.setVisibility(GONE);
+        } else {
+            summary.setVisibility(VISIBLE);
+            loading.setVisibility(GONE);
+        }
+    }
+
+    public void setLoading(int value) {
+        setLoading(value > 0);
+        if (value > 0) {
+            loading.setIndeterminate(false);
+            loading.setProgress(value);
+        }
     }
 
     /*

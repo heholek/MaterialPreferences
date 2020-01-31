@@ -23,5 +23,12 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:text="Dummy summary" />
+
+        <ProgressBar
+            android:id="@id/mp_loading"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 </merge>
